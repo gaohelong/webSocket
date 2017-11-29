@@ -73,6 +73,26 @@
             contentEle.prepend(e.data);
         };
 
+        // 连接错误
+        ws.onerror = function(e) {
+            var text = '当前状态: ';
+            switch (ws.readyState) {
+                case 0:
+                    text += '连接还没开启.';
+                    break;
+                case 1:
+                    text += '连接已开启并准备好进行通信.';
+                    break;
+                case 2:
+                    text += '连接正在关闭的过程中.';
+                    break;
+                default:
+                    text += '连接已经关闭，或者连接无法建立.';
+            }
+
+            contentEle.prepend(text);
+        }
+
         var sendEle = $('#send');
         sendEle.find('button').off('click').on('click', function() {
             var inputEle = sendEle.find('input');
