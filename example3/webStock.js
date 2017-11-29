@@ -48,6 +48,8 @@ wss.on('connection', ws => {
 
         // 广播.
         wss.broadcast(ws, msg);
+
+        // console.log(ws.readyState);
     });
 
     // 服务器向客户端发送消息
