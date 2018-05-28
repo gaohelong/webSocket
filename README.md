@@ -1,5 +1,3 @@
 ### webSocket实例.
 
-```javascript
-1、example1: 入门实例.
-```
+[websocket](http://www.ruanyifeng.com/blog/2017/05/websocket.html)
