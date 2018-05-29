@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>socket.io</title>
+    </head>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            padding: 10px;
+        }
+
+        #content {
+            width: 700px;
+            height: 400px;
+            padding: 10px;
+            background-color: black;
+            border-radius: 8px;
+            overflow-x: hidden;
+            overflow: auto;
+            color: #fff;
+        }
+
+        #send {
+            margin-top: 20px;
+        }
+
+        #send input {
+            padding: 5px;
+            line-height: 30px;
+            border: 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #send button {
+            width: 100px;
+            padding: 10px;
+            border: 0;
+            color: #fff;
+            background-color: cadetblue;
+            border-radius: 10px;
+        }
+    </style>
+    <body>
+        <div id="content"></div>
+        <div id="send">
+            <input type="text" placeholder="请输入要说的内容" autocomplete="off" />
+            <button type="button">发送</button>
+        </div>
+    </body>
+</html>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+<script>
+    $(function() {
+        var contentEle = $('#content');
+        const socket = io('http://hl.web-socket.com:3000');
+
+        // 当连接成功后就可以发送消息了
+        socket.on('open', () => {
+            contentEle.prepend('客户端连接已建立' + new Date());
+            socket.send('客户端发出的测试探针');
+        });
+
+        // 收到消息后做对应的处理
+        socket.on('message', (data) => {
+            contentEle.prepend(data);
+        });
+
+        // // 连接错误
+        // ws.onerror = function(e) {
+        //     var text = '当前状态: ';
+        //     switch (ws.readyState) {
+        //         case 0:
+        //             text += '连接还没开启.';
+        //             break;
+        //         case 1:
+        //             text += '连接已开启并准备好进行通信.';
+        //             break;
+        //         case 2:
+        //             text += '连接正在关闭的过程中.';
+        //             break;
+        //         default:
+        //             text += '连接已经关闭，或者连接无法建立.';
+        //     }
+
+        //     contentEle.prepend(text);
+        // }
+
+        // var sendEle = $('#send');
+        // sendEle.find('button').off('click').on('click', function() {
+        //     var inputEle = sendEle.find('input');
+        //     ws.send(inputEle.val());
+        //     inputEle.val('');
+        // });
+
+        // // 关闭连接.
+        // ws.onclose = function() {
+        //     ws.send('客户端页面即将关闭!');
+        // }
+
+        // $(window).unload(function() {
+        //     ws.close();
+        // });
+    });
+</script>
