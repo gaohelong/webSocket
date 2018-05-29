@@ -26,6 +26,14 @@ io.on('connection', function(socket) {
         console.log(reason);
         socket.disconnect(true);
     });
+
+    // 自定义事件.
+    socket.emit('emitCustom', { msg: 'emit custom!' });
+
+    // 自定义事件及客户端回调函数.
+    socket.emit('ferret', 'ferret!', (data) => {
+        console.log('ferret:', data);
+    } );
 });
 
 // 广播.
